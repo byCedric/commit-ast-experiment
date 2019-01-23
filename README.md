@@ -1,5 +1,7 @@
 # Commit Parser
 
+[![Build Status](https://img.shields.io/travis/com/byCedric/byCedric/Commit-Parser/develop.svg?style=flat-square)](https://travis-ci.com/byCedric/byCedric/Commit-Parser)
+
 Parsing conventional commits using nearley grammar.
 
 ## Getting started
