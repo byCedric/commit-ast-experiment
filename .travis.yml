@@ -10,4 +10,10 @@ os:
   - windows
 cache: npm
 script:
+  - npm run build
   - npm test
+after_success:
+  - >
+    test $TRAVIS_NODE_VERSION = '11' &&
+    test $TRAVIS_OS_NAME = 'linux' &&
+    npm run test-integration
