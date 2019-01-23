@@ -1,0 +1,16 @@
+# Package managers
+/node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+yarn.lock
+
+# Testing
+/coverage
+
+# Project files
+/lib
+commit-debug.html
+
+# misc
+.DS_Store

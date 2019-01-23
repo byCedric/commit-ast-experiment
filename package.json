@@ -1,0 +1,47 @@
+{
+	"name": "commit-parser",
+	"version": "0.0.0",
+	"description": "Conventional commits parser using Nearley grammar",
+	"author": "Cedric van Putten <me@bycedric.com> (https://bycedric.com)",
+	"license": "MIT",
+	"main": "index.js",
+	"homepage": "https://github.com/bycedric/commit-parser#readme",
+	"bugs": {
+		"url": "https://github.com/bycedric/commit-parser/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/bycedric/commit-parser.git"
+	},
+	"scripts": {
+		"pretest": "npm run build",
+		"test": "ava",
+		"build": "npm run build-babel && npm run build-nearley",
+		"build-babel": "babel src --out-dir lib --source-maps",
+		"build-nearley": "nearleyc src/grammar/index.ne --out lib/grammar.js",
+		"benchmark": "node test/data/benchmark",
+		"debug": "nearley-railroad src/grammar/index.ne --out grammar-debug.html"
+	},
+	"dependencies": {
+		"nearley": "^2.16.0"
+	},
+	"devDependencies": {
+		"@babel/cli": "^7.2.3",
+		"@babel/core": "^7.2.2",
+		"@babel/preset-env": "^7.2.3",
+		"ava": "^1.1.0",
+		"lodash": "^4.17.11"
+	},
+	"babel": {
+		"presets": [
+			[
+				"@babel/preset-env",
+				{
+					"targets": {
+						"node": 10
+					}
+				}
+			]
+		]
+	}
+}
