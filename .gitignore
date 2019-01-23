@@ -10,7 +10,7 @@ yarn.lock
 
 # Project files
 /lib
-commit-debug.html
+grammar-debug.html
 
 # misc
 .DS_Store
