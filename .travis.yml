@@ -8,6 +8,9 @@ os:
   - linux
   - osx
   - windows
+matrix:
+  allow_failures:
+    - os: windows
 cache: npm
 script:
   - npm run build
