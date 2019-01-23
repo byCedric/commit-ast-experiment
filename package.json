@@ -20,7 +20,6 @@
 		"build": "npm run build-babel && npm run build-nearley",
 		"build-babel": "babel src --out-dir lib --source-maps",
 		"build-nearley": "nearleyc src/grammar/index.ne --out lib/grammar.js",
-		"benchmark": "node test/data/benchmark",
 		"debug": "nearley-railroad src/grammar/index.ne --out grammar-debug.html"
 	},
 	"dependencies": {
