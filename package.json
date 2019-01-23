@@ -1,6 +1,7 @@
 {
 	"name": "commit-parser",
 	"version": "0.0.0",
+	"private": true,
 	"description": "Conventional commits parser using Nearley grammar",
 	"author": "Cedric van Putten <me@bycedric.com> (https://bycedric.com)",
 	"license": "MIT",
