@@ -3,7 +3,7 @@ import { resolve } from 'path';
 import { round } from 'lodash';
 import test from 'ava';
 import parse from 'csv-parse/lib/sync';
-import { parseString } from '../../lib/parser';
+import { parseString } from '../..';
 
 const load = (type) => {
 	const file = resolve(__dirname, `commits-${type}.csv`);

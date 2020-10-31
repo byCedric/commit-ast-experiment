@@ -3,14 +3,16 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-yarn.lock
+package-lock.json
 
 # Testing
 /coverage
 
 # Project files
-/lib
+/build
 grammar-debug.html
+src/grammar/index.ts
+src/grammar/index.js
 
 # misc
 .DS_Store

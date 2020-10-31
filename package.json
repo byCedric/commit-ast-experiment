@@ -5,7 +5,7 @@
 	"description": "Conventional commits parser using Nearley grammar",
 	"author": "Cedric van Putten <me@bycedric.com> (https://bycedric.com)",
 	"license": "MIT",
-	"main": "index.js",
+	"main": "build/parser.js",
 	"homepage": "https://github.com/bycedric/commit-parser#readme",
 	"bugs": {
 		"url": "https://github.com/bycedric/commit-parser/issues"
@@ -17,32 +17,21 @@
 	"scripts": {
 		"test": "ava 'test/**/*.js' '!test/data/**/*.js'",
 		"test-integration": "ava 'test/data/**/*.js'",
-		"build": "npm run build-babel && npm run build-nearley",
-		"build-babel": "babel src --out-dir lib --source-maps",
-		"build-nearley": "nearleyc src/grammar/index.ne --out lib/grammar.js",
+		"build": "yarn build-nearley && yarn build-typescript",
+		"build-nearley": "nearleyc src/grammar/index.ne --out src/grammar/index.js",
+		"build-typescript": "tsc",
 		"debug": "nearley-railroad src/grammar/index.ne --out grammar-debug.html"
 	},
 	"dependencies": {
+		"moo": "^0.5.1",
 		"nearley": "^2.16.0"
 	},
 	"devDependencies": {
-		"@babel/cli": "^7.2.3",
-		"@babel/core": "^7.2.2",
-		"@babel/preset-env": "^7.2.3",
+		"@types/moo": "^0.5.3",
+		"@types/nearley": "^2.11.1",
 		"ava": "^1.1.0",
 		"csv-parse": "^4.3.1",
-		"lodash": "^4.17.11"
-	},
-	"babel": {
-		"presets": [
-			[
-				"@babel/preset-env",
-				{
-					"targets": {
-						"node": 10
-					}
-				}
-			]
-		]
+		"lodash": "^4.17.11",
+		"typescript": "^4.0.5"
 	}
 }
