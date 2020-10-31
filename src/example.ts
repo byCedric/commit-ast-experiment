@@ -7,6 +7,7 @@ const example1: Commit = {
 		{
 			type: 'header',
 			children: [
+				{ type: 'text', value: 'fix(cli): this is a normal fix commit (#123)' },
 				{ type: 'type', value: 'fix' },
 				{ type: 'scope', value: 'cli' },
 				{ type: 'subject', value: 'this is a normal fix commit' },
@@ -23,6 +24,7 @@ const example2: Commit = {
 		{
 			type: 'header',
 			children: [
+				{ type: 'text', value: 'feat(app)!: this new feature breaks something [skip-ci]' },
 				{ type: 'type', value: 'feat' },
 				{ type: 'scope', value: 'app' },
 				{ type: 'breaking', value: '!' },
@@ -34,6 +36,8 @@ const example2: Commit = {
 };
 
 // feat(v2): add support for key,cert in https (#3594)
+//
+// This adds a certain feature @someone requested.
 //
 // * fix: add support for key,cert in https
 //
@@ -47,31 +51,24 @@ const example2: Commit = {
 //
 // Fixes #123
 // Co-authored-by: slorber <lorber.sebastien@gmail.com>
-const example3: Commit = {
+const ast: Commit = {
 	type: 'commit',
 	children: [
-		// Not sure if we should add these "raw value"-text nodes?
-		// {
-		// 	type: 'text',
-		// 	value: 'feat(v2): add support for key,cert in https (#3594)\n\n'
-		// 		+ '* fix: add support for key,cert in https\n\r\n\r'
-		// 		+ '* docs: add steps for using https with docusaurus\n\r\n\r'
-		// 		+ '* improve https certs docs (#987)\n\r\n\r'
-		// 		+ '* typo\n\r\n\r'
-		// 		+ '* local https: add mkcert -install step\n\r\n\r'
-		// 		+ 'Fixes #123\n\n'
-		// 		+ 'Co-authored-by: slorber <lorber.sebastien@gmail.com>'
-		// 	,
-		// },
 		{
 			type: 'header',
 			children: [
-				// Not sure if we should add these "raw value"-text nodes?
 				{ type: 'text', value: 'feat(v2): add support for key,cert in https (#3594)' },
 				{ type: 'type', value: 'feat' },
 				{ type: 'scope', value: 'v2' },
 				{ type: 'subject', value: 'add support for key,cert in https' },
 				{ type: 'reference', value: '3594' },
+			],
+		},
+		{
+			type: 'body',
+			children: [
+				{ type: 'text', value: 'This adds a certain feature @someone requested.' },
+				{ type: 'mention', value: 'someone' },
 			],
 		},
 		{ type: 'body', children: [{ type: 'text', value: '* fix: add support for key,cert in https' }] },
@@ -88,7 +85,6 @@ const example3: Commit = {
 		{
 			type: 'footer',
 			children: [
-				// Not sure if we should add these "raw value"-text nodes?
 				{ type: 'text', value: 'Fixes #123' },
 				{ type: 'action', value: 'Fixes' },
 				{ type: 'reference', value: '123' },
@@ -97,7 +93,6 @@ const example3: Commit = {
 		{
 			type: 'footer',
 			children: [
-				// Not sure if we should add these "raw value"-text nodes?
 				{ type: 'text', value: 'Co-authored-by: slorber <lorber.sebastien@gmail.com>' },
 				{ type: 'action', value: 'Co-authored-by' },
 				{ type: 'text', value: 'slorber <lorber.sebastien@gmail.com>' },

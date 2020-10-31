@@ -20,7 +20,7 @@ export interface Commit extends Parent {
  */
 export interface Header extends Parent {
 	type: 'header';
-	children: (HeaderType | HeaderScope | HeaderSubject | Breaking | Reference | Flag | Text)[];
+	children: (HeaderType | HeaderScope | HeaderSubject | Breaking | Reference | Flag | Mention | Text)[];
 }
 
 /**
@@ -57,7 +57,7 @@ export interface HeaderSubject extends Literal {
  */
 export interface Body extends Parent {
 	type: 'body';
-	children: (Text | Reference)[];
+	children: (Text | Reference | Mention)[];
 }
 
 /**
@@ -68,7 +68,7 @@ export interface Body extends Parent {
  */
 export interface Footer extends Parent {
 	type: 'footer',
-	children: (FooterAction | Breaking | Reference | Text)[];
+	children: (FooterAction | Breaking | Reference | Mention | Text)[];
 }
 
 /**
@@ -111,6 +111,16 @@ export interface Flag extends Literal {
 }
 
 /**
+ * A mention is a reference to a user-like entity.
+ * This could be a co-maintainer or organization.
+ *   - it MUST start with an at `@` and may not contain any whitespace
+ */
+export interface Mention extends Literal {
+	type: 'mention',
+	value: string;
+}
+
+/**
  * Text is anything that's just considered text.
  * It's used by some nodes as children, like body.
  */
@@ -134,5 +144,6 @@ export type Nodes =
 	| Breaking
 	| Reference
 	| Flag
+	| Mention
 	| Text
 ;
