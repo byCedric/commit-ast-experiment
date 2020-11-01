@@ -17,17 +17,18 @@ const format = ast => util.inspect(ast, false, 6);
 
 test('#parseString parses a set of example commits', t => {
 	const examples = [
-		'feat: this is a new feature',
-		'fix(cli): this is fixed in the cli now',
-		'refactor!: changes the implementation, but is also breaking',
-		'refactor: this is the first commit\nchore(cli)!: this is another',
-		'feature: this is a simple commit with reference #123',
-		'feature: this is a commit with wrapped reference (#123)',
-		'fix: multiple references #123 #456 (#abc-123)',
+		// 'feat(cli): this is a new feature (#123) #456',
+		// 'fix(cli): this is fixed in the cli now',
+		// 'refactor!: changes the implementation, but is also breaking [skip-ci] #123',
+		// 'refactor: this is the first commit\nchore(cli)!: this is another',
+		// 'feature: this is a simple commit with reference #123',
+		// 'feature: this is a commit with wrapped reference (#123)',
+		// 'fix: multiple references #123 #456 (#abc-123)',
 		'docs(cli): add notion about cli (#123)\r\n\r\nFixes #123 #456',
 		'feat(v2): add support for key,cert in https (#3594)\n\nCo-authored-by : slorber <lorber.sebastien@gmail.com>',
 		'feat(v2): add support for key,cert in https (#3594)\n\n* fix: add support for key,cert in https\r\n\r\n* docs: add steps for using https with docusaurus\r\n\r\n* improve https certs docs\r\n\r\n* typo\r\n\r\n* local https: add mkcert -install step\r\n\r\nCo-authored-by: slorber <lorber.sebastien@gmail.com>',
-		'docs(cli): add notion about cli (#123)\r\n\r\nWhats up bitches?',
+		// 'docs(cli): add notion about cli (#123)\r\n\r\nWhats up bitches?',
+		// '[whatsupwiththis] something',
 	];
 
 	try {

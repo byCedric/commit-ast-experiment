@@ -10,46 +10,73 @@ const grammar = Grammar.fromCompiled(compiledGrammar);
  * @return {object}
  */
 export function parseString(text: string) {
-	const { results } = new Parser(grammar).feed(preprocess(text));
+	const segments = preprocess(text);
 
-	if (results.length <= 1) {
-		return results[0];
+	if (!segments.length) {
+		return null;
 	}
 
-	const relevant = postprocess(results);
+	const nodes = segments.map((segment, index) => {
+		const results = new Parser(grammar).feed(segment).finish();
+		return postprocess(segment, index, results);
+	});
 
-	if (relevant) {
-		return relevant;
-	}
+	return {
+		type: 'commit',
+		children: nodes,
+	};
 
-	throw new MultipleResults(text, results);
+	// if (results.length <= 1) {
+	// 	return results[0];
+	// }
+
+	// const relevant = postprocess(results);
+
+	// if (relevant) {
+	// 	return relevant;
+	// }
+
+	// throw new MultipleResults(text, results);
 };
 
+/**
+ * Process the text and return the text in segments back.
+ * Every segment is handled and parsed as a commit line.
+ */
 function preprocess(text: string) {
 	return text
 		.replace(/(\r\n|\n\r)/g, '\n') // replace CRLF to LF
-		.trim(); // remove outer trailing spaces or newlines
+		.split('\n\n'); // split it up by commit separator
 }
 
-function postprocess(results: any[]) {
-	// context issue #1 - references in header subjects matches the subject signature, but a not the other way around
-	// try matching the ASTs with a header subject children/reference score
+function postprocess(segment: string, index: number, results: any[]) {
+	const order = index === 0
+		? ['header', 'footer', 'body']
+		: ['footer', 'body', '', '', 'header'];
 
-	// no solution... not in combination with other scores, its basically gambling...
-
-	// context issue #2 - footers are also matching body signature, but not the other way around
-	// try matching the ASTs with a footer score to determine the most probable AST to return
-	const footerScore = results
-		.map(ast => ({ ast, score: ast.children.filter(token => token.type === 'footer').length }))
-		.sort((a, z) => z.score - a.score);
-
-	if (footerScore[0].score > 0) {
-		return footerScore[0].ast;
+	if (!results.length) {
+		return null;
 	}
-}
 
-class MultipleResults extends Error {
-	constructor(public text: string, public results: any[]) {
-		super(`Found ${results.length} outcomes for: ${text}`)
-	};
+	// sort results by type, in order of header - footer - body
+	// when either one of these types is found in that order,
+	// it's highly likely that the commit line is this type
+	const type = results
+		.sort((a, z) => order.indexOf(a.type) - order.indexOf(z.type))
+		[0].type;
+
+	// console.log('postprocess - type', type);
+
+	// now find the component with the most children,
+	// this is the best we can match it on for now
+	const component = results
+		.filter(node => node.type === type)
+		.sort((a, z) => z.children.length - a.children.length)
+		[0];
+
+	if (component.children[0].type !== 'text') {
+		component.children.unshift({ type: 'text', value: segment });
+	}
+
+	return component;
 }
